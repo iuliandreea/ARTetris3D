@@ -11,7 +11,7 @@ public class GameOverHandler : MonoBehaviour
 
     private void Start()
     {
-        scoreText.text = "Score: " + GameManager.instance.GetScore().ToString("D5");
+        scoreText.text = "Score: " + GameManager.score.ToString("D5");
     }
 
     private void Update()

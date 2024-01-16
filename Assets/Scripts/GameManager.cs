@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    int score;
+    public static int score;
     bool gameOver;
 
 

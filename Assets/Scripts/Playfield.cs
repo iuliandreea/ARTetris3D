@@ -29,10 +29,10 @@ public class Playfield : MonoBehaviour
     {
         grid = new Transform[gridSizeX, gridSizeY, gridSizeZ];
         CalculatePreview();
-        //Previewer.instance.ShowPreview(randomIndex);
+        Previewer.instance.ShowPreview(randomIndex);
         //SpawnFixedBlock();
         //Debug.Log("uwu");
-        SpawnNewBlock();
+        SpawnNewBlock(Previewer.detectedBlockIndex);
     }
 
     public Vector3 Round(Vector3 vec)
@@ -43,19 +43,18 @@ public class Playfield : MonoBehaviour
     int Remap(float from, float fromMin, float fromMax, float toMin, float toMax)
     {
         float val = toMin + ((toMax - toMin) / (fromMax - fromMin)) * (from - fromMin);
-        return Mathf.FloorToInt(val);
+        return Mathf.RoundToInt(val);
     }
 
     public bool CheckIfInsidePlayfield(Vector3 position)
     {
         return position.x <= ePlane.transform.position.x && position.x >= wPlane.transform.position.x &&
                position.y >= bottomPlane.transform.position.y &&
-              position.z <= nPlane.transform.position.z && position.z >= sPlane.transform.position.z;
+               position.z <= nPlane.transform.position.z && position.z >= sPlane.transform.position.z;
     }
 
     public void UpdateGrid(TetrisBlock tBlock)
     {
-        // TODO: make stuff relative to the shifted grid coordinates
         for (int x = 0; x < gridSizeX; x++) 
             for (int z = 0; z < gridSizeZ; z++)
                 for (int y = 0; y < gridSizeY; y++)
@@ -65,13 +64,12 @@ public class Playfield : MonoBehaviour
 
         foreach(Transform child in tBlock.transform) 
         {
-            Vector3 pos = Round(child.position);
+            Vector3 pos = child.position;
             if (pos.y < transform.position.y + gridSizeY)
             {
-                // grid[(int)Mathf.Abs(pos.x - transform.position.x), (int)Mathf.Abs(pos.y - transform.position.y), (int)Mathf.Abs(pos.z - transform.position.z)] = child;
-                int x = Remap(pos.x, wPlane.transform.position.x, ePlane.transform.position.x - 1, 0f, gridSizeX - 1);
-                int y = Remap(pos.y, bottomPlane.transform.position.y, bottomPlane.transform.position.y + gridSizeY - 1, 0f, gridSizeY - 1);
-                int z = Remap(pos.z, sPlane.transform.position.z, nPlane.transform.position.z - 1, 0f, gridSizeZ - 1);
+                int x = Remap(pos.x, wPlane.transform.position.x + 0.5f, ePlane.transform.position.x - 0.5f, 0f, gridSizeX - 1);
+                int y = Remap(pos.y, bottomPlane.transform.position.y + 0.5f, bottomPlane.transform.position.y + gridSizeY - 0.5f, 0f, gridSizeY - 1);
+                int z = Remap(pos.z, sPlane.transform.position.z + 0.5f, nPlane.transform.position.z - 0.5f, 0f, gridSizeZ - 1);
 
                 grid[x, y, z] = child;
             }
@@ -83,24 +81,30 @@ public class Playfield : MonoBehaviour
     {
         if (pos.y > transform.position.y + gridSizeY) 
             return null;
-        //return grid[(int)Mathf.Abs(pos.x - transform.position.x), (int)Mathf.Abs(pos.y - transform.position.y), (int)Mathf.Abs(pos.z - transform.position.z)];
-        int x = Remap(pos.x, wPlane.transform.position.x, ePlane.transform.position.x - 1, 0f, gridSizeX - 1);
-        int y = Remap(pos.y, bottomPlane.transform.position.y, bottomPlane.transform.position.y + gridSizeY - 1, 0f, gridSizeY - 1);
-        int z = Remap(pos.z, sPlane.transform.position.z, nPlane.transform.position.z - 1, 0f, gridSizeZ - 1);
+        int x = Remap(pos.x, wPlane.transform.position.x + 0.5f, ePlane.transform.position.x - 0.5f, 0f, gridSizeX - 1);
+        int y = Remap(pos.y, bottomPlane.transform.position.y + 0.5f, bottomPlane.transform.position.y + gridSizeY - 0.5f, 0f, gridSizeY - 1);
+        int z = Remap(pos.z, sPlane.transform.position.z + 0.5f, nPlane.transform.position.z - 0.5f, 0f, gridSizeZ - 1);
         return grid[x, y, z];
     }
 
-    public void SpawnNewBlock() 
+    public void SpawnNewBlock(int index = -1) 
     {
+        bool isRandom = (index == -1);
+        if (isRandom)
+            index = randomIndex;
+
         Vector3 spawnPoint = new Vector3(transform.position.x + 0.5f,
                                          transform.position.y + gridSizeY + 0.5f,
                                          transform.position.z + gridSizeZ - 0.5f);
 
         // spawn
-        GameObject newBlock = Instantiate(blockList[3], spawnPoint, Quaternion.identity, transform.parent) as GameObject;
+        GameObject newBlock = Instantiate(blockList[index], spawnPoint, Quaternion.identity, transform.parent) as GameObject;
         newBlock.transform.rotation = transform.parent.rotation;
-        CalculatePreview();
-        Previewer.instance.ShowPreview(randomIndex);
+        if (isRandom)
+        {
+            CalculatePreview();
+            Previewer.instance.ShowPreview(randomIndex);
+        }
         // ghost
     }
 
