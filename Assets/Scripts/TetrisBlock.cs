@@ -66,7 +66,7 @@ public class TetrisBlock : MonoBehaviour
     {
         transform.Rotate(rotation, Space.World);
         if (!CheckValidMove())
-            transform.Rotate(rotation, Space.World);
+            transform.Rotate(-rotation, Space.World);
         else
             Playfield.instance.UpdateGrid(this);
     }

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlaceObject.cs" />
+    <Compile Include="Assets\Scripts\CameraSetter.cs" />
     <Compile Include="Assets\Scripts\TetrisBlock.cs" />
     <Compile Include="Assets\Scripts\ARCameraMovement.cs" />
     <Compile Include="Assets\Scripts\Previewer.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\ExampleAssets\Scripts\ARFeatheredPlaneMeshVisualizer.cs" />
     <Compile Include="Assets\Scripts\Playfield.cs" />
     <Compile Include="Assets\Scripts\MenuHandler.cs" />
+    <Compile Include="Assets\Scripts\Gamefield.cs" />
     <Compile Include="Assets\Scripts\ButtonInputs.cs" />
     <Compile Include="Assets\Scripts\RotateMe.cs" />
   </ItemGroup>

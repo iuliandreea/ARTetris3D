@@ -29,9 +29,10 @@ public class Playfield : MonoBehaviour
     {
         grid = new Transform[gridSizeX, gridSizeY, gridSizeZ];
         CalculatePreview();
-        //Previewer.instance.ShowPreview(randomIndex);
-        //SpawnFixedBlock();
-        SpawnNewBlock();
+        Previewer.instance.ShowPreview(randomIndex);
+        SpawnFixedBlock();
+        Debug.Log("uwu");
+        //SpawnNewBlock();
     }
 
     public Vector3 Round(Vector3 vec)
@@ -91,12 +92,13 @@ public class Playfield : MonoBehaviour
 
     public void SpawnNewBlock() 
     {
-        Vector3 spawnPoint = new Vector3((int)(transform.position.x + gridSizeX / 2f),
-                                         (int)transform.position.y + gridSizeY - 1,
-                                         (int)(transform.position.z + gridSizeZ / 2f));
+        Vector3 spawnPoint = new Vector3(transform.position.x + 0.5f,
+                                 transform.position.y + gridSizeY - 0.5f,
+                                 transform.position.z + gridSizeZ - 0.5f);
 
         // spawn
-        GameObject newBlock = Instantiate(blockList[randomIndex], spawnPoint, Quaternion.identity) as GameObject;
+        GameObject newBlock = Instantiate(blockList[randomIndex], spawnPoint, Quaternion.identity, transform.parent) as GameObject;
+        newBlock.transform.rotation = transform.parent.rotation;
         CalculatePreview();
         Previewer.instance.ShowPreview(randomIndex);
         // ghost
@@ -104,11 +106,15 @@ public class Playfield : MonoBehaviour
 
     public void SpawnFixedBlock()
     {
-        Vector3 spawnPoint = new Vector3((int)(transform.position.x + gridSizeX / 2f),
-                                         (int)transform.position.y + gridSizeY - 1,
-                                         (int)(transform.position.z + gridSizeZ / 2f));
+        //Vector3 spawnPointold = new Vector3((int)(transform.position.x / 2f),
+        //                                 (int)transform.position.y + gridSizeY - 1,
+        //                                 (int)(transform.position.z + gridSizeZ / 2f));
+        Vector3 spawnPoint = new Vector3(transform.position.x + 0.5f,
+                                 transform.position.y + gridSizeY - 0.5f,
+                                 transform.position.z + gridSizeZ - 0.5f);
 
-        GameObject newBlock = Instantiate(blockList[Previewer.instance.GetDetectedBlockIndex()], spawnPoint, Quaternion.identity) as GameObject;
+        GameObject newBlock = Instantiate(blockList[Previewer.detectedBlockIndex], spawnPoint, Quaternion.identity, transform.parent) as GameObject;
+        newBlock.transform.rotation = transform.parent.rotation;
         //CalculatePreview();
         //Previewer.instance.ShowPreview();
     }

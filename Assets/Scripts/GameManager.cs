@@ -1,6 +1,5 @@
-using UnityEditor.SearchService;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+
+using UnityEngine;using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +23,11 @@ public class GameManager : MonoBehaviour
     {
         score += (100 * amount);
         UIHandler.instance.UpdateUI(score);
+    }
+
+    public int GetScore()
+    {
+        return score;
     }
 
     public bool ReadGameOver()

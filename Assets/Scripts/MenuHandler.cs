@@ -17,6 +17,8 @@ public class MenuHandler : MonoBehaviour
         {
             transform.position = aRCamera.transform.position;
             transform.rotation = aRCamera.transform.rotation;
+
+            Previewer.instance.setCurrentActivePosition(aRCamera.transform.position + transform.Find("RawImage").gameObject.transform.position);
         }
     }
 

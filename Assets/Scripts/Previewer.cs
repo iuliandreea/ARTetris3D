@@ -9,24 +9,29 @@ public class Previewer : MonoBehaviour
     public GameObject[] previewBlocks;
     GameObject currentActive;
 
-    int detectedBlockIndex; 
+    public static int detectedBlockIndex; 
 
     private void Awake()
     {
         instance = this;
     }
 
+
+    public void setCurrentActivePosition(Vector3 position)
+    {
+        currentActive.transform.position = position;
+    }
+
     public void ShowPreview(int index)
     {
         Destroy(currentActive);
-        currentActive = Instantiate(previewBlocks[index], transform.position, Quaternion.identity) as GameObject;
+        currentActive = Instantiate(previewBlocks[index], transform.position, Quaternion.identity, transform.parent) as GameObject;
         currentActive.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     public void ShowPreview()
     {
-        GameObject detectedBlock = null; 
-
+        GameObject detectedBlock = null;
         foreach (GameObject block in previewBlocks) 
         {
             if (block.name == PrefabScanner.instance.GetScannedPrefabName())

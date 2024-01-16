@@ -18,6 +18,8 @@ public class PlaceObject : MonoBehaviour
 
     private bool isCreated;
 
+    public Camera aRCamera;
+
     private void Awake()
     {
         aRRaycastManager = GetComponent<ARRaycastManager>();
@@ -48,7 +50,32 @@ public class PlaceObject : MonoBehaviour
         {
             Pose pose = hits[0].pose;
             GameObject obj = Instantiate(prefab, pose.position, pose.rotation);
+
+            Canvas canvas = obj.transform.Find("Canvas").transform.GetComponent<Canvas>();
+            canvas.worldCamera = aRCamera;
             this.enabled = false;
+
+            Transform holder = obj.transform.Find("InputHolder").transform;
+            holder.Find("MoveCanvas").GetComponent<Canvas>().worldCamera = aRCamera;
+            holder.Find("RotateCanvasX").GetComponent<Canvas>().worldCamera = aRCamera;
+            holder.Find("RotateCanvasY").GetComponent<Canvas>().worldCamera = aRCamera;
+            holder.Find("RotateCanvasZ").GetComponent<Canvas>().worldCamera = aRCamera;
+
+            if (aRPlaneManager.GetPlane(hits[0].trackableId).alignment == PlaneAlignment.HorizontalUp)
+            {
+                Vector3 position = obj.transform.position;
+                position.y = 0f;
+                Vector3 cameraPosition = Camera.main.transform.position;
+                cameraPosition.y = 0f;
+                Vector3 direction = cameraPosition - position;
+                Vector3 targetRotationEuler = Quaternion.LookRotation(direction).eulerAngles;
+                Vector3 scaledEuler = Vector3.Scale(targetRotationEuler, obj.transform.up.normalized); // (0, 1, 0)
+                Quaternion targetRotation = Quaternion.Euler(scaledEuler);
+                obj.transform.rotation = obj.transform.rotation * targetRotation;
+
+            }
+
+            //this.enabled = false;
         }
     }
 }
