@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5492793362291088008
+  m_GuidHigh: 2462810592484134826
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4836735906961581843
+      m_GuidHigh: 1875480731296455352
+    m_SerializedTextureGuid:
+      m_GuidLow: 149935642391813081
+      m_GuidHigh: 11462164788811945866
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: TBlock0
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5634209297557201263
+      m_GuidHigh: 15021933437393047695
+    m_SerializedTextureGuid:
+      m_GuidLow: 6045085155166933551
+      m_GuidHigh: 9251844568969753834
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: TBlock1
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5191497927268819117
+      m_GuidHigh: 1704047835074212765
+    m_SerializedTextureGuid:
+      m_GuidLow: 10517170646720773297
+      m_GuidHigh: 17070986439610317691
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: TBlock2
+    m_Texture: {fileID: 0}
