@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     public void setGameOver()
     {
         gameOver = true;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.UnloadSceneAsync(currentSceneName);
         SceneManager.LoadScene("GameOverScene");
         // UIHandler.instance.SetGameOverWindow();
     }

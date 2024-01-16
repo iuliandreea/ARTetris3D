@@ -48,40 +48,27 @@ public class PrefabScanner : MonoBehaviour
 
     void ImageChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
-        foreach (ARTrackedImage trackedImage in eventArgs.added)
-        {
-            string prefab = trackedImage.referenceImage.name;
-            if (prefab.Contains("TBlock"))
-            {
-                scannedPrefabName = "T Preview";
-                SceneManager.LoadScene("MenuScene");
-            }
-        }
-
         foreach (ARTrackedImage trackedImage in eventArgs.updated)
         {
             string prefab = trackedImage.referenceImage.name;
+            scannedPrefabName = null;
             if (prefab.Contains("TBlock"))
-            {
                 scannedPrefabName = "T Preview";
-                SceneManager.LoadScene("MenuScene");
-            }
             else if (prefab.Contains("IBlock"))
-            {
                 scannedPrefabName = "I Preview";
-                SceneManager.LoadScene("MenuScene");
-            }
             else if (prefab.Contains("OBlock"))
-            {
                 scannedPrefabName = "O Preview";
-                SceneManager.LoadScene("MenuScene");
-            }
             else if (prefab.Contains("SBlock"))
-            {
                 scannedPrefabName = "S Preview";
-                SceneManager.LoadScene("MenuScene");
-            }
 
+            if (scannedPrefabName != null)
+            {
+                this.enabled = false;
+                string currentSceneName = SceneManager.GetActiveScene().name;
+                SceneManager.UnloadSceneAsync(currentSceneName);
+                SceneManager.LoadScene("MenuScene");
+                break;
+            }
         }
     }
 

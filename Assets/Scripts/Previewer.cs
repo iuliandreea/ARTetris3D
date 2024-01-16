@@ -16,7 +16,6 @@ public class Previewer : MonoBehaviour
         instance = this;
     }
 
-
     public void setCurrentActivePosition(Vector3 position)
     {
         currentActive.transform.position = position;
@@ -45,6 +44,7 @@ public class Previewer : MonoBehaviour
                     detectedBlockIndex = 3;
                 else if (block.name == "S Preview")
                     detectedBlockIndex = 4;
+                break;
             }
         }
 
@@ -52,7 +52,7 @@ public class Previewer : MonoBehaviour
         {
             Destroy(currentActive);
             currentActive = Instantiate(detectedBlock, transform.position, Quaternion.identity) as GameObject;
-            currentActive.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            currentActive.transform.localScale = new Vector3(1f, 1f, 1f);
         }
     }
 

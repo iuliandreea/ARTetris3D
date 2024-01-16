@@ -11,10 +11,10 @@ public class TetrisBlock : MonoBehaviour
     void Start() 
     {
         ButtonInputs.instance.SetActiveBlock(gameObject, this);
+        transform.position += Vector3.down;
         if (!CheckValidMove())
-        {
             GameManager.instance.setGameOver();
-        }
+        transform.position += Vector3.up;
     }
 
     // Update is called once per frame
@@ -33,7 +33,6 @@ public class TetrisBlock : MonoBehaviour
             {
                 // Update the grid
                 Playfield.instance.UpdateGrid(this);
-                
             }
             else
             {
@@ -46,7 +45,6 @@ public class TetrisBlock : MonoBehaviour
 
                 if(!GameManager.instance.ReadGameOver())
                     Playfield.instance.SpawnNewBlock();
-                
             }
             prevTime = Time.time;
         }
@@ -75,14 +73,14 @@ public class TetrisBlock : MonoBehaviour
     {
         foreach(Transform child in transform) 
         {
-            Vector3 pos = Playfield.instance.Round(child.position);
+            Vector3 pos = child.position;
             if (!Playfield.instance.CheckIfInsidePlayfield(pos))
                 return false;
         }
         
         foreach(Transform child in transform)
         {
-            Vector3 pos = Playfield.instance.Round(child.position);
+            Vector3 pos = child.position;
             Transform t = Playfield.instance.GetTransformOnGridPosition(pos);
             if (t != null && t.parent != transform)
                 return false;

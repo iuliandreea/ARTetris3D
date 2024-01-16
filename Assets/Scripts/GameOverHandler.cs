@@ -25,6 +25,8 @@ public class GameOverHandler : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.UnloadSceneAsync(currentSceneName);
         SceneManager.LoadScene(sceneName);
     }
 }

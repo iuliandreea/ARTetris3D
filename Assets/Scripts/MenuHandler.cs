@@ -17,13 +17,14 @@ public class MenuHandler : MonoBehaviour
         {
             transform.position = aRCamera.transform.position;
             transform.rotation = aRCamera.transform.rotation;
-
             Previewer.instance.setCurrentActivePosition(aRCamera.transform.position + transform.Find("RawImage").gameObject.transform.position);
         }
     }
 
     public void LoadScene(string sceneName)
     {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.UnloadSceneAsync(currentSceneName);
         SceneManager.LoadScene(sceneName);
     }
 }
